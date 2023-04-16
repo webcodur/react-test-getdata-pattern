@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import innerCompStyle from "../style/innerCompStyle.js";
-const InnerComp = ({ idx }) => {
+const InnerComp = ({ outerIdx }) => {
   const [innerData, setInnerData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const toggleButtn = () => {
+  const toggleButton = () => {
     setIsOpen((prev) => !prev);
     setIsLoading(true);
   };
@@ -17,7 +17,7 @@ const InnerComp = ({ idx }) => {
   }, [isOpen]);
 
   const getInnerData = async () => {
-    await fetch(`https://jsonplaceholder.typicode.com/users/${idx + 1}`)
+    await fetch(`https://jsonplaceholder.typicode.com/users/${outerIdx + 1}`)
       .then((response) => response.json())
       .then((response) => {
         setInnerData(response);
@@ -28,7 +28,7 @@ const InnerComp = ({ idx }) => {
   return (
     <div style={innerCompStyle}>
       <div>
-        <button onClick={toggleButtn}>{isOpen ? "닫기" : "보기"}</button>
+        <button onClick={toggleButton}>{isOpen ? "닫기" : "보기"}</button>
       </div>
       작성자 : &nbsp;
       {isOpen && !isLoading && innerData?.name}
